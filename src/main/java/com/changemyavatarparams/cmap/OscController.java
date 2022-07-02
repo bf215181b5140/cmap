@@ -28,7 +28,8 @@ public class OscController {
 
     // Avatar meta and parameters
     public static AvatarMeta avatarMeta = new AvatarMeta();
-    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_34e33df2-33a5-4475-87f5-e5839489ba93");
+    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_34e33df2-33a5-4475-87f5-e5839489ba93",
+                                                                  "avtr_0097309a-3154-418e-9e67-81adc648702b");
 
     // UI Clients
     public static List<Client> clients = new ArrayList<>();
@@ -93,7 +94,7 @@ public class OscController {
 
             MessageSelector paramSelector = new OSCPatternAddressMessageSelector("/avatar/parameters/*");
             MessageSelector metaSelector = new OSCPatternAddressMessageSelector("/avatar/meta/*");
-            MessageSelector avatarSelector = new OSCPatternAddressMessageSelector("/avatar/change/*");
+            MessageSelector avatarSelector = new OSCPatternAddressMessageSelector("/avatar/change");
 
 //            MessageSelector testSelector = new OSCPatternAddressMessageSelector("/*/*/*");
 // /avatar/change/
@@ -146,9 +147,7 @@ public class OscController {
                 String parameter = StringUtils.substringAfterLast(event.getMessage().getAddress(), "/");
                 Object value = event.getMessage().getArguments().get(0);
                 avatarMeta.setLastPulse(java.time.LocalDateTime.now());
-                System.out.println(java.time.LocalDateTime.now() + " Recieved avatar change message with value: " + value.toString());
                 avatarMeta.setSupportedAvatar(supportedAvatarIDs.contains(value.toString()));
-                System.out.println(java.time.LocalDateTime.now() + " List of " + supportedAvatarIDs.toString() + " contains the value? " + supportedAvatarIDs.contains(value.toString()));
                 onlineCheck();
                 sendParams();
             };
