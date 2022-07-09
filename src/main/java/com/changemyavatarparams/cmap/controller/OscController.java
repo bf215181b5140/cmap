@@ -1,4 +1,4 @@
-package com.changemyavatarparams.cmap;
+package com.changemyavatarparams.cmap.controller;
 
 import com.changemyavatarparams.cmap.object.AvatarMeta;
 import com.changemyavatarparams.cmap.object.AvatarParameter;
@@ -25,6 +25,7 @@ public class OscController {
     private static final int outPort = 9000;
     private static OSCPortOut oscPortOut;
     private static OSCPortIn oscPortIn;
+    private static DbController dbConnection = new DbController();
 
     // Avatar meta and parameters
     public static AvatarMeta avatarMeta = new AvatarMeta();
@@ -35,6 +36,7 @@ public class OscController {
     public static List<Client> clients = new ArrayList<>();
 
     public static void addClient(Client newClient) {
+        dbConnection.addClient(newClient);
         clients.add(newClient);
         newClient.getUi().access(() -> newClient.getView().updateContent(avatarMeta));
     }
@@ -65,7 +67,7 @@ public class OscController {
         return !online;
     }
 
-    public static void messageSend(String paramName, Object paramValue) {
+    public static void messageSend(String paramName, Object paramValue, Boolean writeToDb) {
         try {
             oscPortOut = new OSCPortOut(InetAddress.getByName(oscIP), outPort);
         } catch(Exception e) {
@@ -75,7 +77,12 @@ public class OscController {
         OSCMessage message = new OSCMessage("/avatar/parameters/" + paramName, List.of(paramValue));
 
         try {
+
+            if (writeToDb) {
+                dbConnection.addParameter(paramName, paramValue);
+            }
             oscPortOut.send(message);
+
             if (paramName.equals("MemeToggles")) {
                 try {
                     TimeUnit.SECONDS.sleep(4);
@@ -97,7 +104,6 @@ public class OscController {
             MessageSelector avatarSelector = new OSCPatternAddressMessageSelector("/avatar/change");
 
 //            MessageSelector testSelector = new OSCPatternAddressMessageSelector("/*/*/*");
-// /avatar/change/
 //            OSCMessageListener testListener = event -> {
 //                System.out.println(event.getMessage());
 //                System.out.println(event.getMessage().getAddress());
@@ -144,7 +150,6 @@ public class OscController {
             };
 
             OSCMessageListener avatarListener = event -> {
-                String parameter = StringUtils.substringAfterLast(event.getMessage().getAddress(), "/");
                 Object value = event.getMessage().getArguments().get(0);
                 avatarMeta.setLastPulse(java.time.LocalDateTime.now());
                 avatarMeta.setSupportedAvatar(supportedAvatarIDs.contains(value.toString()));

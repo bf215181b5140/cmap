@@ -1,12 +1,13 @@
 package com.changemyavatarparams.cmap.view;
 
-import com.changemyavatarparams.cmap.*;
+import com.changemyavatarparams.cmap.controller.OscController;
 import com.changemyavatarparams.cmap.object.AvatarMeta;
 import com.changemyavatarparams.cmap.object.Client;
 import com.changemyavatarparams.cmap.object.ImageButton;
 import com.changemyavatarparams.cmap.object.ParamsButton;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Span;
@@ -16,7 +17,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.WebBrowser;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -54,8 +58,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(new ParamsButton("Outfit", 9, "Leather straps"));
         paramButtons.add(new ParamsButton("Outfit", 10, "Black Leather"));
         paramButtons.add(new ParamsButton("Outfit", 11, "Summer Maid"));
-//        paramButtons.add(new ParamsButton("Outfit", 7, "Winter jacket"));
-//        paramButtons.add(new ParamsButton("Outfit", 8, "Sweater"));
 
         // Hair
         paramButtons.add(new ParamsButton("Hair", false, "Blowout"));
@@ -85,7 +87,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 //        setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 
-        paramButtons.forEach(x -> x.addClickListener(y -> OscController.messageSend(x.getParam(), x.getValue())));
+        paramButtons.forEach(x -> x.addClickListener(y -> OscController.messageSend(x.getParam(), x.getValue(), true)));
     }
 
     private void buildHeader() {
@@ -223,7 +225,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        this.thisClient = new Client(attachEvent.getUI(), this);
+        this.thisClient = new Client(attachEvent.getUI(), this, VaadinSession.getCurrent().getBrowser());
         OscController.addClient(this.thisClient);
     }
 
