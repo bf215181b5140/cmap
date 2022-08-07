@@ -3,8 +3,8 @@ package com.changemyavatarparams.cmap.controller;
 import com.changemyavatarparams.cmap.object.Client;
 
 import java.sql.*;
-import java.time.Clock;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DbController {
     private ResultSet resultSet = null;
@@ -28,7 +28,7 @@ public class DbController {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO PARAMETERS_USED (NAME, VALUE, DATE) VALUES (?, ?, ?);");
             statement.setString(1, paramName);
             statement.setString(2, paramValue.toString());
-            statement.setLong(3, Instant.now(Clock.systemUTC()).getEpochSecond());
+            statement.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd kk:mm:ss")));
             statement.execute();
         } catch (Exception e) {
             System.out.println(java.time.LocalDateTime.now() + " Failed inserting Parameter into database. Exception: " + e.getMessage());
@@ -45,7 +45,7 @@ public class DbController {
             statement.setString(4, client.getUserAgent());
             statement.setString(5, client.getLocale());
             statement.setString(6, client.getCookie());
-            statement.setLong(7, Instant.now(Clock.systemUTC()).getEpochSecond());
+            statement.setString(7, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd kk:mm:ss")));
             statement.execute();
         } catch (Exception e) {
             System.out.println(java.time.LocalDateTime.now() + " Failed inserting Client into database. Exception: " + e.getMessage());

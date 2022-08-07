@@ -7,7 +7,6 @@ import com.changemyavatarparams.cmap.object.ImageButton;
 import com.changemyavatarparams.cmap.object.ParamsButton;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Span;
@@ -18,9 +17,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.server.WebBrowser;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -207,13 +203,13 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         threeColumnLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
 
         contentLayout.add(
-            new H4("Skin"),
-            skinlayout,
-            new H4("Outfits"),
-            outfitLayout,
-            threeColumnLayout,
-            new H4("Fun"),
-            memeLayout
+                new H4("Skin"),
+                skinlayout,
+                new H4("Outfits"),
+                outfitLayout,
+                threeColumnLayout,
+                new H4("Fun"),
+                memeLayout
 //            new H4("Other"),
 //            otherLayout
         );
@@ -234,7 +230,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         OscController.removeClient(this.thisClient);
     }
 
-    public void updateContent(AvatarMeta avatarMeta){
+    public void updateContent(AvatarMeta avatarMeta) {
         onlineBadge.setVisible(avatarMeta.isOnline());
         offlineBadge.setVisible(!avatarMeta.isOnline());
         if (avatarMeta.isOnline()) {
@@ -251,18 +247,19 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                         btn.setEnabled(false);
                     }
                     if (newParam.getParam().equals("GestureRight") && newParam.getValue().equals(7) ||
-                        newParam.getParam().equals("GestureLeft") && newParam.getValue().equals(0)) {
+                            newParam.getParam().equals("GestureLeft") && newParam.getValue().equals(0)) {
                         sleepingThreshold.getAndIncrement();
                     }
                 });
             });
-            sleepingBadge.setVisible(avatarMeta.isInVrMode() && !avatarMeta.isAfk() && sleepingThreshold.get() >= (paramButtons.size()*2));
+            sleepingBadge.setVisible(avatarMeta.isInVrMode() && !avatarMeta.isAfk() && sleepingThreshold.get() >= (paramButtons.size() * 2));
         } else {
             afkBadge.setVisible(false);
             muteSelfBadge.setVisible(false);
             vrModeBadge.setVisible(false);
             desktopModeBadge.setVisible(false);
             sleepingBadge.setVisible(false);
+            supportedAvatarBadge.setVisible(false);
             paramButtons.forEach(x -> x.setEnabled(false));
         }
     }
