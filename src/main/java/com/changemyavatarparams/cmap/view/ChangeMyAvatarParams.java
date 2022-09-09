@@ -16,7 +16,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.RequestHandler;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.server.VaadinResponse;
 import com.vaadin.flow.server.VaadinSession;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,6 +32,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     private List<ParamsButton> paramButtons = new ArrayList<>();
 
     private Client thisClient;
+
 
     Span onlineBadge = new Span(new Span("Online"), createIcon(VaadinIcon.CHECK));
     Span offlineBadge = new Span(new Span("Offline"), createIcon(VaadinIcon.CLOSE));
@@ -52,8 +58,9 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(new ParamsButton("Outfit", 5, "Sleeveless shirt"));
         paramButtons.add(new ParamsButton("Outfit", 6, "Tank top with skirt"));
         paramButtons.add(new ParamsButton("Outfit", 9, "Leather straps"));
-        paramButtons.add(new ParamsButton("Outfit", 10, "Black Leather"));
-        paramButtons.add(new ParamsButton("Outfit", 11, "Summer Maid"));
+        paramButtons.add(new ParamsButton("Outfit", 10, "Black leather"));
+        paramButtons.add(new ParamsButton("Outfit", 11, "Summer maid"));
+        paramButtons.add(new ParamsButton("Outfit", 12, "Leesh outfit"));
 
         // Hair
         paramButtons.add(new ParamsButton("Hair", false, "Blowout"));
@@ -221,8 +228,25 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
+
         this.thisClient = new Client(attachEvent.getUI(), this, VaadinSession.getCurrent().getBrowser());
-        OscController.addClient(this.thisClient);
+        attachEvent.getSession().addRequestHandler(new RequestHandler() {
+            @Override
+            public boolean handleRequest(VaadinSession session, VaadinRequest request, VaadinResponse response) throws IOException {
+                if(thisClient.getHeaders().isEmpty()) {
+                    Enumeration<String> names = request.getHeaderNames();
+                    while (names.hasMoreElements()) {
+                        String header = names.nextElement();
+                        thisClient.getHeaders().put(header, request.getHeader(header));
+                    }
+                    System.out.println("----------- Added new client! -----------");
+                    System.out.println(thisClient.getHeaders().get("cookie"));
+                    System.out.println(thisClient.getHeaders().get("cf-connecting-ip"));
+                    OscController.addClient(thisClient);
+                }
+                return false;
+            }
+        });
     }
 
     @Override

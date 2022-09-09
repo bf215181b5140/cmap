@@ -41,10 +41,10 @@ public class DbController {
                     " VALUES (?, ?, ?, ?, ?, ?, ?);");
             statement.setInt(1, client.getUi().getUIId());
             statement.setString(2, client.getView().getClassName());
-            statement.setString(3, client.getIp());
+            statement.setString(3, client.getHeaders().get("cf-connecting-ip"));
             statement.setString(4, client.getUserAgent());
             statement.setString(5, client.getLocale());
-            statement.setString(6, client.getCookie());
+            statement.setString(6, client.getHeaders().get("cookie"));
             statement.setString(7, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd kk:mm:ss")));
             statement.execute();
         } catch (Exception e) {

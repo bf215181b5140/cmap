@@ -4,6 +4,8 @@ import com.changemyavatarparams.cmap.view.ChangeMyAvatarParams;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.WebBrowser;
 
+import java.util.HashMap;
+
 public class Client {
     private UI ui;
     private ChangeMyAvatarParams view;
@@ -13,6 +15,7 @@ public class Client {
     private String userAgent;
     private String locale;
     private String cookie;
+    private HashMap<String, String> headers;
 
     public Client(UI ui, ChangeMyAvatarParams view, WebBrowser webBrowser) {
         this.ui = ui;
@@ -21,6 +24,7 @@ public class Client {
         this.userAgent = webBrowser.getBrowserApplication();
         this.locale = webBrowser.getLocale().toString();
         this.cookie = java.util.UUID.randomUUID().toString();
+        this.headers = new HashMap<>();
     }
 
     public UI getUi() {
@@ -77,6 +81,14 @@ public class Client {
 
     public void setCookie(String cookie) {
         this.cookie = cookie;
+    }
+
+    public HashMap<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(HashMap<String, String> headers) {
+        this.headers = headers;
     }
 
     public String toString() {

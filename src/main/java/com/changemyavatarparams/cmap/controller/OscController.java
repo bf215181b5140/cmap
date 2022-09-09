@@ -79,10 +79,11 @@ public class OscController {
 
         try {
 
+            oscPortOut.send(message);
+
             if (writeToDb) {
                 dbConnection.addParameter(paramName, paramValue);
             }
-            oscPortOut.send(message);
 
             if (paramName.equals("MemeToggles")) {
                 try {
