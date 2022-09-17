@@ -45,12 +45,12 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 
     public ChangeMyAvatarParams() {
         // Skin
-        paramButtons.add(new ParamsButton("Skin", 0, "Normal"));
-        paramButtons.add(new ParamsButton("Skin", 2, "Tan"));
-        paramButtons.add(new ParamsButton("Skin", 4, "Brown"));
-        paramButtons.add(new ParamsButton("Skin", 3, "Succubus"));
-        paramButtons.add(new ParamsButton("Skin", 5, "Emo"));
-        paramButtons.add(new ParamsButton("Skin", 10, "Furry"));
+        paramButtons.add(new ParamsButton("Skin", 0, "Normal", "#746635"));
+        paramButtons.add(new ParamsButton("Skin", 2, "Tan", "#437436"));
+        paramButtons.add(new ParamsButton("Skin", 4, "Brown", "#75482d"));
+        paramButtons.add(new ParamsButton("Skin", 3, "Succubus", "#4f688d"));
+        paramButtons.add(new ParamsButton("Skin", 5, "Emo", "#743535"));
+        paramButtons.add(new ParamsButton("Skin", 10, "Furry", "#367470"));
 
         // Outfits
         paramButtons.add(new ParamsButton("Outfit", 1, "Sporty"));
@@ -169,10 +169,10 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.forEach(btn -> {
             switch (btn.getParam()) {
                 case "Skin":
-                    skinlayout.add(new ImageButton(btn, "images/buttons/" + btn.getParam() + (int) btn.getValue() + ".png"));
+                    skinlayout.add(new ImageButton(btn, null));
                     break;
                 case "Outfit":
-                    outfitLayout.add(new ImageButton(btn, "images/buttons/" + btn.getParam() + (int) btn.getValue() + ".png"));
+                    outfitLayout.add(new ImageButton(btn, "images/buttons/"));
                     break;
                 case "MemeToggles":
                     memeLayout.add(btn);
