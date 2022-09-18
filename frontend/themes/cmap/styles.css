@@ -1,22 +1,32 @@
 /* Import your application global css files here or add the styles directly to this file */
+html {
+    background-color:#dddddd;
+}
+
 #pageLayout {
     padding:0;
     margin:0;
+    min-height:100%;
 }
 
 #headerLayout {
-    margin-top:3em;
-    margin-bottom:1em;
+    margin-top:30px;
+    margin-bottom:20px;
     padding:0;
-    width:45em;
+    width:700px;
+    max-width:100%;
 }
 
 #contentLayout {
-    margin-:0;
-    padding:2em;
-    border:0.1em solid var(--lumo-shade-20pct);
-    box-shadow: 0 0 1em 0.5em var(--lumo-shade-5pct);
+    background-color:#e0e0e0;
+    margin:0;
+    margin-bottom: 40px;
+    padding:30px;
+    border:1px solid var(--lumo-shade-20pct);
+    box-shadow: 0 0 20px 0 var(--lumo-shade-10pct);
     border-radius: var(--lumo-border-radius-l);
+    width:auto;
+    max-width:990px;
 }
 
 #contentLayout vaadin-horizontal-layout {
@@ -24,10 +34,10 @@
 }
 
 #avatarMe {
-    width:6em;
-    height:6em;
-    border:0.1em solid var(--lumo-shade-50pct);
-    box-shadow: 0 0 1em 0.5em var(--lumo-shade-5pct);
+    width:100px;
+    height:100px;
+    border:1px solid var(--lumo-shade-20pct);
+    box-shadow: 0 0 20px 0 var(--lumo-shade-10pct);
 }
 
 .badge {
@@ -57,23 +67,20 @@
 }
 
 H4 {
-    margin:1em 0.5em 0.5em 0.5em ;
+    margin: 5px;
 }
 
 .imageButton {
     background-position: center left;
     background-repeat: no-repeat;
     background-size: contain;
-	border:0.1em solid var(--lumo-contrast-10pct);
-	box-shadow: inset -0.1em -0.1em 0.2em 0.1em var(--lumo-contrast-5pct);
-    width: 330px;
+    width: 280px;
     height: 130px;
     border-radius: var(--lumo-border-radius-l);
 }
 
 .imageButton .vaadin-button-container {
-    justify-content: right;
-    text-align: left;
+    justify-content: end;
 }
 
 #contentLayout img {
@@ -87,23 +94,27 @@ H4 {
 }
 
 #contentLayout [role="button"] {
-	background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-shade-5pct));
-	border:0.1em solid var(--lumo-contrast-10pct);
-	box-shadow: inset -0.1em -0.1em 0.2em 0.1em var(--lumo-contrast-5pct);
     --lumo-button-size: var(--lumo-size-l);
     padding: 0 calc(var(--lumo-button-size) / 2 + var(--lumo-border-radius-m) / 2);
     margin: var(--lumo-space-xs) 0;
+    border: solid #3673b9 1px;
+    background-color: #5e93d1;
+    background-image: linear-gradient(#5e93d1, #4683c9);
+    box-shadow: inset 0 0 5px 0 var(--lumo-tint-20pct);
+    color:white;
     cursor: pointer;
 }
 
 #contentLayout [role="button"]:hover {
-	background-image: linear-gradient(var(--lumo-shade-5pct), var(--lumo-tint-5pct));
+    background-color: #4683c9;
+	background-image: linear-gradient(#4683c9, #5e93d1);
 }
 
 #contentLayout [role="button"][disabled] {
 	pointer-events: none;
-	color: var(--lumo-disabled-text-color);
-	background-image: none;
+	/* color: var(--lumo-disabled-text-color);
+	background-image: none; */
     box-shadow: none;
+    background-image: linear-gradient(#4683c9, #5e93d1);
     filter: grayscale(70%);
 }

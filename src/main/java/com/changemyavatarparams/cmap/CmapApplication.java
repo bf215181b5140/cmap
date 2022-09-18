@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@Theme(value="cmap", variant = Lumo.DARK)
+@Theme(value="cmap", variant = Lumo.LIGHT)
 @Push
 @SpringBootApplication
 public class CmapApplication extends SpringBootServletInitializer implements AppShellConfigurator {

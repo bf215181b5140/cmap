@@ -12,15 +12,18 @@ public class ImageButton extends Button {
 
 
     public ImageButton(ParamsButton paramsButton, String baseUrl) {
-        super(paramsButton.getDisplayText());
+//        super(paramsButton.getDisplayText());
         this.param = paramsButton.getParam();
         this.value = paramsButton.getValue();
         this.bgColor = paramsButton.getBgColor() != null ? paramsButton.getBgColor() : "#233348";
 
         addClassName("imageButton");
         baseUrl = baseUrl != null ? baseUrl : "images/buttons/v2/";
+//        getStyle().set("background-image", "url(\"" + baseUrl + this.param + (int) this.value + ".png\")," +
+//                "linear-gradient(" + this.bgColor + "," + colorConverter(this.bgColor, 0.6) + ")");
         getStyle().set("background-image", "url(\"" + baseUrl + this.param + (int) this.value + ".png\")," +
-                "linear-gradient(" + this.bgColor + "," + colorConverter(this.bgColor, 0.6) + ")");
+                "linear-gradient(#5e93d1, #4683c9)");
+
     }
 
     public String colorConverter(String hexColor, double modifier) {

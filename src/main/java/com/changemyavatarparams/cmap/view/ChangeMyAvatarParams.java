@@ -84,7 +84,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 //        paramButtons.add(new ParamsButton("TrackingType", 3, "testing button 2"));
 
         setId("pageLayout");
-        setSizeFull();
         buildHeader();
         buildContent();
 //        setJustifyContentMode(JustifyContentMode.CENTER);
@@ -221,8 +220,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 //            otherLayout
         );
         contentLayout.setId("contentLayout");
-        contentLayout.setWidth("auto");
-        contentLayout.setMaxWidth("65em");
         add(contentLayout);
     }
 
@@ -240,7 +237,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                         thisClient.getHeaders().put(header, request.getHeader(header));
                     }
                     System.out.println("----------- Added new client! -----------");
-                    System.out.println(thisClient.getHeaders().get("cookie"));
                     System.out.println(thisClient.getHeaders().get("cf-connecting-ip"));
                     OscController.addClient(thisClient);
                 }
