@@ -32,6 +32,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     private List<ParamsButton> paramButtons = new ArrayList<>();
 
     private Client thisClient;
+    private boolean logHeaders = false;
 
 
     Span onlineBadge = new Span(new Span("Online"), createIcon(VaadinIcon.CHECK));
@@ -230,19 +231,24 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     protected void onAttach(AttachEvent attachEvent) {
 
         this.thisClient = new Client(attachEvent.getUI(), this, VaadinSession.getCurrent().getBrowser());
+        OscController.addClient(thisClient);
         attachEvent.getSession().addRequestHandler(new RequestHandler() {
             @Override
             public boolean handleRequest(VaadinSession session, VaadinRequest request, VaadinResponse response) throws IOException {
-                if(thisClient.getHeaders().isEmpty()) {
-                    Enumeration<String> names = request.getHeaderNames();
-                    while (names.hasMoreElements()) {
-                        String header = names.nextElement();
-                        thisClient.getHeaders().put(header, request.getHeader(header));
-                    }
-                    System.out.println("----------- Added new client! -----------");
-                    System.out.println(thisClient.getHeaders().get("cookie"));
+//                if(thisClient.getHeaders().isEmpty()) {
+//                    Enumeration<String> names = request.getHeaderNames();
+//                    while (names.hasMoreElements()) {
+//                        String header = names.nextElement();
+//                        thisClient.getHeaders().put(header, request.getHeader(header));
+//                    }
+//                    System.out.println("----------- Added new client! -----------");
+//                    System.out.println(thisClient.getHeaders().get("cookie"));
+//                    System.out.println(thisClient.getHeaders().get("cf-connecting-ip"));
+//                }
+                if(!logHeaders) {
+                    System.out.println("----------- Added new client! ----------- " + java.time.LocalDateTime.now());
                     System.out.println(thisClient.getHeaders().get("cf-connecting-ip"));
-                    OscController.addClient(thisClient);
+                    logHeaders = true;
                 }
                 return false;
             }

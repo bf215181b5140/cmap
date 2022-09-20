@@ -20,9 +20,9 @@ public class OscController {
 
     // Osc
     // --legacy-fbt-calibrate --osc=9000:192.168.1.100:9001
-    private static final String oscIP = "192.168.1.6";
-    private static final int inPort = 9001;
-    private static final int outPort = 9000;
+    private static final String oscIP = "192.168.1.50";
+    private static final int inPort = 9006;
+    private static final int outPort = 9005;
     private static OSCPortOut oscPortOut;
     private static OSCPortIn oscPortIn;
     private static DbController dbConnection = new DbController();
