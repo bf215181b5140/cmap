@@ -21,17 +21,15 @@ public class OscController {
     // Osc
     // --legacy-fbt-calibrate --osc=9000:192.168.1.100:9001
     private static final String oscIP = "192.168.1.50";
-    private static final int inPort = 9001;
-    private static final int outPort = 9000;
+    private static final int inPort = 9006;
+    private static final int outPort = 9005;
     private static OSCPortOut oscPortOut;
     private static OSCPortIn oscPortIn;
-    private static DbController dbConnection = new DbController();
+    private static final DbController dbConnection = new DbController();
 
     // Avatar meta and parameters
     public static AvatarMeta avatarMeta = new AvatarMeta();
-    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_34e33df2-33a5-4475-87f5-e5839489ba93",
-                                                                  "avtr_0097309a-3154-418e-9e67-81adc648702b",
-                                                                  "avtr_84e65a71-3ade-4ad0-b296-853d90284ffb");
+    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_c4368f6c-cf31-4763-90ab-e6e56ee7f009");
 
     // UI Clients
     public static List<Client> clients = new ArrayList<>();
@@ -68,28 +66,35 @@ public class OscController {
         return !online;
     }
 
-    public static void messageSend(String paramName, Object paramValue, Boolean writeToDb) {
+    public static void messageSend(AvatarParameter avatarParameter, Boolean writeToDb) {
+        int newExp = avatarParameter.getExpCost().apply(avatarMeta.getExp());
+        if (newExp < 1) {
+            return;
+        }
+
         try {
             oscPortOut = new OSCPortOut(InetAddress.getByName(oscIP), outPort);
         } catch(Exception e) {
             System.out.println(java.time.LocalDateTime.now() + " Failed setting up a OSCPortOut connection to send a message. Exception: " + e.getMessage());
         }
 
-        OSCMessage message = new OSCMessage("/avatar/parameters/" + paramName, List.of(paramValue));
+        OSCMessage message = new OSCMessage("/avatar/parameters/" + avatarParameter.getParam(), List.of(avatarParameter.getValue()));
+        OSCMessage messageExp = new OSCMessage("/avatar/parameters/exp", List.of(newExp));
 
         try {
 
             oscPortOut.send(message);
+            oscPortOut.send(messageExp);
 
             if (writeToDb) {
-                dbConnection.addParameter(paramName, paramValue);
+                dbConnection.addParameter(avatarParameter.getParam(), avatarParameter.getValue());
             }
 
-            if (paramName.equals("MemeToggles")) {
+            if (avatarParameter.getParam().equals("MemeToggles")) {
                 try {
                     TimeUnit.SECONDS.sleep(4);
                 } finally {
-                    oscPortOut.send(new OSCMessage("/avatar/parameters/" + paramName, List.of(0)));
+                    oscPortOut.send(new OSCMessage("/avatar/parameters/" + avatarParameter.getParam(), List.of(0)));
                 }
             }
         } catch (Exception e) {
@@ -101,7 +106,7 @@ public class OscController {
         try {
             oscPortIn = new OSCPortIn(inPort);
 
-            MessageSelector paramSelector = new OSCPatternAddressMessageSelector("/avatar/parameters/*");
+            MessageSelector paramSelector = new OSCPatternAddressMessageSelector("/avatar/params/*");
             MessageSelector metaSelector = new OSCPatternAddressMessageSelector("/avatar/meta/*");
             MessageSelector avatarSelector = new OSCPatternAddressMessageSelector("/avatar/change");
 
@@ -143,6 +148,12 @@ public class OscController {
                         break;
                     case "VRMode":
                         avatarMeta.setVrMode((int) value == 1);
+                        break;
+                    case "exp":
+                        avatarMeta.setExp((int) value);
+                        break;
+                    case "hp":
+                        avatarMeta.setHp((int) value);
                         break;
                     default:
                         break;

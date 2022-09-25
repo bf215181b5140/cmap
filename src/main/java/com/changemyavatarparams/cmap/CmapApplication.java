@@ -2,6 +2,7 @@ package com.changemyavatarparams.cmap;
 
 import com.changemyavatarparams.cmap.controller.DbController;
 import com.changemyavatarparams.cmap.controller.OscController;
+import com.changemyavatarparams.cmap.object.AvatarParameter;
 import com.changemyavatarparams.cmap.view.ChangeMyAvatarParams;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
@@ -32,8 +33,13 @@ public class CmapApplication extends SpringBootServletInitializer implements App
 				} catch (Exception e) {
 					System.out.println(java.time.LocalDateTime.now() + " Failed to sleep. Exception: " + e.getMessage());
 				} finally {
+					AvatarParameter pulseParam = new AvatarParameter("VRMode", 10);
+					if(OscController.avatarMeta.getExp() < 20) {
+						pulseParam.setParam("Exp");
+						pulseParam.setValue(20);
+					}
 					try {
-						OscController.messageSend("VRMode",10, false);
+						OscController.messageSend(pulseParam, false);
 					} catch (Exception e) {
 						System.out.println(java.time.LocalDateTime.now() + " Failed to send out OSC pulse message for VRMode [10]. Exception: " + e.getMessage());
 					}

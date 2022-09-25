@@ -10,6 +10,8 @@ public class AvatarMeta {
     private boolean muteSelf;
     private boolean vrMode;
     private boolean supportedAvatar = true;
+    private int exp = -1;
+    private int hp = 20;
     private LocalDateTime lastPulse = java.time.LocalDateTime.now().minusDays(1);
     private HashSet<AvatarParameter> avatarParameters = new HashSet<>();
 
@@ -81,5 +83,21 @@ public class AvatarMeta {
 
     public void setAvatarParameters(HashSet<AvatarParameter> avatarParameters) {
         this.avatarParameters = avatarParameters;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

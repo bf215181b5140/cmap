@@ -1,10 +1,7 @@
 package com.changemyavatarparams.cmap.view;
 
 import com.changemyavatarparams.cmap.controller.OscController;
-import com.changemyavatarparams.cmap.object.AvatarMeta;
-import com.changemyavatarparams.cmap.object.Client;
-import com.changemyavatarparams.cmap.object.ImageButton;
-import com.changemyavatarparams.cmap.object.ParamsButton;
+import com.changemyavatarparams.cmap.object.*;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -29,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Route("")
 public class ChangeMyAvatarParams extends VerticalLayout {
 
-    private List<ParamsButton> paramButtons = new ArrayList<>();
+    private List<ParamButton> paramButtons = new ArrayList<>();
 
     private Client thisClient;
 
@@ -42,41 +39,53 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     Span vrModeBadge = new Span(new Span("in VR"));
     Span desktopModeBadge = new Span(new Span("on desktop"));
     Span supportedAvatarBadge = new Span(new Span("Possibly using avatar that isn't supported!"), createIcon(VaadinIcon.WARNING));
+    Span expInfo = new Span(new Span("Most toggles have exp cost. Touching certain parts of my avatar in VRChat increases exp. Dying animation toggles consume most of the exp points."), createIcon(VaadinIcon.INFO));
+
+    ExpBarLayout expBar = new ExpBarLayout();
+    HpBarLayout hpBar = new HpBarLayout();
 
     public ChangeMyAvatarParams() {
         // Skin
-        paramButtons.add(new ParamsButton("Skin", 0, "Normal", "#746635"));
-        paramButtons.add(new ParamsButton("Skin", 2, "Tan", "#437436"));
-        paramButtons.add(new ParamsButton("Skin", 4, "Brown", "#75482d"));
-        paramButtons.add(new ParamsButton("Skin", 3, "Succubus", "#4f688d"));
-        paramButtons.add(new ParamsButton("Skin", 5, "Emo", "#743535"));
-        paramButtons.add(new ParamsButton("Skin", 10, "Furry", "#367470"));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 0 ,2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 2,2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 4,2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 3,2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 5,2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 10,2)));
 
         // Outfits
-        paramButtons.add(new ParamsButton("Outfit", 1, "Sporty"));
-        paramButtons.add(new ParamsButton("Outfit", 0, "T-shirt"));
-        paramButtons.add(new ParamsButton("Outfit", 5, "Sleeveless shirt"));
-        paramButtons.add(new ParamsButton("Outfit", 6, "Tank top with skirt"));
-        paramButtons.add(new ParamsButton("Outfit", 9, "Leather straps"));
-        paramButtons.add(new ParamsButton("Outfit", 10, "Black leather"));
-        paramButtons.add(new ParamsButton("Outfit", 11, "Summer maid"));
-        paramButtons.add(new ParamsButton("Outfit", 12, "Leesh outfit"));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 1,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 0,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 5,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 6,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 9,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 10,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 11,1)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 12,1)));
+
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("SocksType", false,1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("SocksType", true,1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 0,1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 0.3,1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 0.6,1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 1,1)));
 
         // Hair
-        paramButtons.add(new ParamsButton("Hair", false, "Blowout"));
-        paramButtons.add(new ParamsButton("Hair", true, "Ponytail"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Hair", false,1), "Blowout"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Hair", true,1), "Ponytail"));
 
         // Piercings
-        paramButtons.add(new ParamsButton("Piercings", false, "Yes"));
-        paramButtons.add(new ParamsButton("Piercings", true, "No"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", false,1), "Yes"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", true,1), "No"));
 
         // Horns and tail
-        paramButtons.add(new ParamsButton("HornsTail", true, "Yes"));
-        paramButtons.add(new ParamsButton("HornsTail", false, "No"));
+        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", true,1), "Yes"));
+        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", false,1), "No"));
 
         //Memes
-        paramButtons.add(new ParamsButton("MemeToggles", 11, "Die in Minecraft"));
-        paramButtons.add(new ParamsButton("MemeToggles", 12, "Die in Apex"));
+        paramButtons.add(new ParamButton(new AvatarParameter("MemeToggles", 11, integer -> Math.max(1, (int)(integer * 0.3))), "Die in Minecraft"));
+        paramButtons.add(new ParamButton(new AvatarParameter("MemeToggles", 12, integer -> Math.max(1, (int)(integer * 0.3))), "Die in Apex"));
+        paramButtons.add(new ParamButton(new AvatarParameter("takeDamage", true, 0), "A little slap"));
 
         //Test button
 //        paramButtons.add(new ParamsButton("MuteSelf", false, "testing button"));
@@ -89,13 +98,14 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 //        setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 
-        paramButtons.forEach(x -> x.addClickListener(y -> OscController.messageSend(x.getParam(), x.getValue(), true)));
+//        paramButtons.forEach(x -> x.addClickListener(y -> OscController.messageSend(x.getParam(), x.getValue(), true)));
     }
 
     private void buildHeader() {
         HorizontalLayout headerLayout = new HorizontalLayout();
-        HorizontalLayout headerAvatar = new HorizontalLayout();
-        HorizontalLayout headerMeta = new HorizontalLayout();
+        VerticalLayout headerMeta = new VerticalLayout();
+
+        HorizontalLayout meta = new HorizontalLayout();
 
         Avatar avatar = new Avatar("Me");
         avatar.setImage("images/avatar.png");
@@ -136,44 +146,75 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         supportedAvatarBadge.addClassName("warning");
         supportedAvatarBadge.setVisible(false);
 
-        headerAvatar.add(avatar, onlineBadge, offlineBadge);
-        headerAvatar.setId("headerAvatar");
-        headerAvatar.setAlignItems(Alignment.END);
+        expInfo.getElement().getThemeList().add("badge");
+        expInfo.addClassName("badge");
 
-        headerMeta.add(afkBadge, sleepingBadge, muteSelfBadge, vrModeBadge, desktopModeBadge);
-        headerMeta.setId("headerMeta");
+//        headerAvatar.add(, onlineBadge, offlineBadge);
+//        headerAvatar.setId("headerAvatar");
+//        headerAvatar.setAlignItems(Alignment.END);
+
+        meta.add(new HorizontalLayout(onlineBadge, offlineBadge), new HorizontalLayout(afkBadge, sleepingBadge, muteSelfBadge, vrModeBadge, desktopModeBadge));
+        meta.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        meta.setId("meta");
+//        meta.setAlignItems(Alignment.END);
+
+        headerMeta.add(meta, hpBar, expBar);
+        headerMeta.setJustifyContentMode(JustifyContentMode.CENTER);
         headerMeta.setAlignItems(Alignment.END);
+        headerMeta.setId("headerMeta");
 
-        headerLayout.add(headerAvatar, headerMeta);
+        headerLayout.add(avatar, headerMeta);
         headerLayout.setId("headerLayout");
-        headerLayout.setAlignItems(Alignment.END);
+        headerLayout.setAlignItems(Alignment.CENTER);
         headerLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         add(headerLayout);
-        add(supportedAvatarBadge);
+        add(supportedAvatarBadge, expInfo);
     }
 
     private void buildContent() {
         VerticalLayout contentLayout = new VerticalLayout();
-        HorizontalLayout threeColumnLayout = new HorizontalLayout();
+
         HorizontalLayout skinlayout = new HorizontalLayout();
         skinlayout.setJustifyContentMode(JustifyContentMode.EVENLY);
+
         HorizontalLayout outfitLayout = new HorizontalLayout();
         outfitLayout.setJustifyContentMode(JustifyContentMode.EVENLY);
-        HorizontalLayout hairLayout = new HorizontalLayout();
-        HorizontalLayout piercingsLayout = new HorizontalLayout();
-        HorizontalLayout hornsTailLayout = new HorizontalLayout();
-        HorizontalLayout memeLayout = new HorizontalLayout();
-        HorizontalLayout otherLayout = new HorizontalLayout();
+
+//        HorizontalLayout socksLayout = new HorizontalLayout();
+//        socksLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
+
+        HorizontalLayout socksTypeLayout = new HorizontalLayout();
+        socksTypeLayout.setJustifyContentMode(JustifyContentMode.EVENLY);
+
+        HorizontalLayout socksStyleLayout = new HorizontalLayout();
+        socksStyleLayout.setJustifyContentMode(JustifyContentMode.EVENLY);
+
+        HorizontalLayout threeColumnLayout = new HorizontalLayout();
+        GroupButtonLayout hairLayout = new GroupButtonLayout();
+        GroupButtonLayout piercingsLayout = new GroupButtonLayout();
+        GroupButtonLayout hornsTailLayout = new GroupButtonLayout();
+
+        GroupButtonLayout memeLayout = new GroupButtonLayout();
+        GroupButtonLayout otherLayout = new GroupButtonLayout();
 
         paramButtons.forEach(btn -> {
-            switch (btn.getParam()) {
+            switch (btn.getAvatarParameter().getParam()) {
                 case "Skin":
-                    skinlayout.add(new ImageButton(btn, null));
+                    skinlayout.add(btn);
                     break;
                 case "Outfit":
-                    outfitLayout.add(new ImageButton(btn, "images/buttons/"));
+                    outfitLayout.add(btn);
+                    break;
+                case "StyleSocks":
+                    socksStyleLayout.add(btn);
+                    break;
+                case "SocksType":
+                    socksTypeLayout.add(btn);
                     break;
                 case "MemeToggles":
+                    memeLayout.add(btn);
+                    break;
+                case "takeDamage":
                     memeLayout.add(btn);
                     break;
                 case "Hair":
@@ -213,6 +254,10 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                 skinlayout,
                 new H4("Outfits"),
                 outfitLayout,
+                new H4("Socks type"),
+                socksTypeLayout,
+                new H4("Socks texture"),
+                socksStyleLayout,
                 threeColumnLayout,
                 new H4("Fun"),
                 memeLayout
@@ -227,18 +272,17 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     protected void onAttach(AttachEvent attachEvent) {
 
         this.thisClient = new Client(attachEvent.getUI(), this, VaadinSession.getCurrent().getBrowser());
+        OscController.addClient(thisClient);
         attachEvent.getSession().addRequestHandler(new RequestHandler() {
             @Override
             public boolean handleRequest(VaadinSession session, VaadinRequest request, VaadinResponse response) throws IOException {
-                if(thisClient.getHeaders().isEmpty()) {
-                    Enumeration<String> names = request.getHeaderNames();
-                    while (names.hasMoreElements()) {
-                        String header = names.nextElement();
-                        thisClient.getHeaders().put(header, request.getHeader(header));
+                Enumeration<String> names = request.getHeaderNames();
+                while (names.hasMoreElements()) {
+                    String header = names.nextElement();
+                    if(header.equals("cf-connecting-ip")){
+                        System.out.println("----------- Added new client! -----------");
+                        System.out.println(request.getHeader(header));
                     }
-                    System.out.println("----------- Added new client! -----------");
-                    System.out.println(thisClient.getHeaders().get("cf-connecting-ip"));
-                    OscController.addClient(thisClient);
                 }
                 return false;
             }
@@ -259,11 +303,17 @@ public class ChangeMyAvatarParams extends VerticalLayout {
             vrModeBadge.setVisible(avatarMeta.isInVrMode());
             desktopModeBadge.setVisible(!avatarMeta.isInVrMode());
             supportedAvatarBadge.setVisible(!avatarMeta.isSupportedAvatar());
+
+            expBar.setExpLevel((int)(avatarMeta.getExp() * 0.05));
+            expBar.setExpPoints(avatarMeta.getExp() % 20);
+
+            hpBar.setHpBarFull((int)((avatarMeta.getHp() * 0.05) * 100));
+
             AtomicInteger sleepingThreshold = new AtomicInteger(0);
             paramButtons.forEach(btn -> {
-                btn.setEnabled(true);
+                btn.setEnabled(btn.getAvatarParameter().getExpCost().apply(avatarMeta.getExp()) > 0);
                 avatarMeta.getAvatarParameters().forEach(newParam -> {
-                    if (btn.getParam().equals(newParam.getParam()) && btn.getValue().equals(newParam.getValue())) {
+                    if (btn.getAvatarParameter().getParam().equals(newParam.getParam()) && btn.getAvatarParameter().getValue().equals(newParam.getValue())) {
                         btn.setEnabled(false);
                     }
                     if (newParam.getParam().equals("GestureRight") && newParam.getValue().equals(7) ||

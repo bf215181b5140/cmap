@@ -1,6 +1,6 @@
 /* Import your application global css files here or add the styles directly to this file */
 html {
-    background-color:#dddddd;
+    background-color:#cccccc;
 }
 
 #pageLayout {
@@ -13,12 +13,21 @@ html {
     margin-top:30px;
     margin-bottom:20px;
     padding:0;
-    width:700px;
+    /* width:730px; */
     max-width:100%;
 }
 
+#headerMeta {
+    gap: var(--lumo-space-s);
+}
+
+#meta {
+    width: 100%;
+    margin-bottom: 7px;
+}
+
 #contentLayout {
-    background-color:#e0e0e0;
+    background-color:hsla(0, 0%, 100%, 0.2);
     margin:0;
     margin-bottom: 40px;
     padding:30px;
@@ -40,9 +49,70 @@ html {
     box-shadow: 0 0 20px 0 var(--lumo-shade-10pct);
 }
 
+#HpBar {
+    background-image: url("/images/hpBarEmpty.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    width: 241px;
+    height: 25px;
+    padding: 0;
+}
+
+#HpBarFull {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-image: url("/images/hpBarFull.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 241px;
+    width: 241px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+}
+
+#ExpBar {
+    background-image: url("/images/expBarEmpty.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 450px;
+    height: 20px;
+    padding: 0;
+    position: relative;
+}
+
+#ExpBarFull {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-image: url("/images/expBarFull.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size:450px;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#ExpBar .ExpLevelText {
+    color: #7fca3d;
+    font-weight: bold;
+    font-size: 32px;
+    text-shadow: 0 0 2px black;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    position: absolute; 
+    left: 50%;
+    /* transform: translateX(-50%); */
+}
+
 .badge {
     height:2em;
-    margin-bottom:1em;
+    /* margin-bottom:1em; */
+    font-weight: normal;
 }
 
 .vrMode {
@@ -70,20 +140,7 @@ H4 {
     margin: 5px;
 }
 
-.imageButton {
-    background-position: center left;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 280px;
-    height: 130px;
-    border-radius: var(--lumo-border-radius-l);
-}
-
-.imageButton .vaadin-button-container {
-    justify-content: end;
-}
-
-#contentLayout img {
+/* #contentLayout img {
     padding:0;
     margin:0;
     width: 7em;
@@ -91,23 +148,24 @@ H4 {
     border:0.1em solid var(--lumo-contrast-10pct);
 	box-shadow: inset -0.1em -0.1em 0.2em 0.1em var(--lumo-contrast-5pct);
     border-radius: var(--lumo-border-radius-l);
-}
+} */
 
 #contentLayout [role="button"] {
     --lumo-button-size: var(--lumo-size-l);
     padding: 0 calc(var(--lumo-button-size) / 2 + var(--lumo-border-radius-m) / 2);
     margin: var(--lumo-space-xs) 0;
-    border: solid #3673b9 1px;
-    background-color: #5e93d1;
-    background-image: linear-gradient(#5e93d1, #4683c9);
-    box-shadow: inset 0 0 5px 0 var(--lumo-tint-20pct);
+    border: solid #5a7faa 1px;
+    background-color: #8cb1db;
+    background-image: linear-gradient(#8cb1db, #5a7faa);
+    box-shadow: inset 0 0 3px 0 rgba(255, 255, 255, 0.5);
     color:white;
     cursor: pointer;
+    font-weight: normal;
 }
 
 #contentLayout [role="button"]:hover {
-    background-color: #4683c9;
-	background-image: linear-gradient(#4683c9, #5e93d1);
+    background-color: #5a7faa;
+	background-image: linear-gradient(#5a7faa, #8cb1db);
 }
 
 #contentLayout [role="button"][disabled] {
@@ -115,6 +173,102 @@ H4 {
 	/* color: var(--lumo-disabled-text-color);
 	background-image: none; */
     box-shadow: none;
-    background-image: linear-gradient(#4683c9, #5e93d1);
-    filter: grayscale(70%);
+    /* background-image: linear-gradient(#5a7faa, #8cb1db); */
+    filter: grayscale(80%);
+}
+
+#contentLayout .imageButton {
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 280px;
+    height: 130px;
+    border-radius: var(--lumo-border-radius-l);
+    box-shadow: inset 0 0 5px 0 rgba(255, 255, 255, 0.5);
+}
+
+#contentLayout .VerticalImageButton {
+    width: 160px;
+    height: 200px;
+}
+
+#contentLayout .GroupButton {
+    /* margin:0;
+    padding:0; */
+    /* box-shadow: inset 0 0 5px 0 rgba(255, 255, 255, 0.5); */
+}
+
+#contentLayout .GroupButton [role="button"] {
+    border-left:0px;
+    border-radius:0;
+    margin:0;
+    background-image: linear-gradient(#80a5d0, #6388b4);
+}
+
+#contentLayout .GroupButton [role="button"]:hover {
+    background-image: linear-gradient(#6388b4, #80a5d0);
+}
+
+#contentLayout .GroupButton [role="button"][disabled] {
+    background-color: #6388b4;
+    background-image: none;
+}
+
+#contentLayout .GroupButton [role="button"]:first-child {
+    border-left:solid #4683c9 1px;
+    border-top-left-radius: var(--lumo-border-radius-m);
+    border-bottom-left-radius: var(--lumo-border-radius-m);
+}
+
+#contentLayout .GroupButton [role="button"]:last-child{
+    /* border-right:solid #4683c9 1px; */
+    border-top-right-radius: var(--lumo-border-radius-m);
+    border-bottom-right-radius: var(--lumo-border-radius-m);
+}
+
+@media (max-width: 750px) {
+
+    #avatarMe {
+        display: none;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    #headerMeta {
+        flex-wrap: wrap;
+    }
+
+    #meta {
+        flex-wrap: wrap;
+    }    
+
+    #meta vaadin-horizontal-layout {
+        flex-wrap: wrap;
+    }    
+}
+
+@media (max-width: 500px) {
+    
+    #avatarMe {
+        display: none;
+    }
+    
+    #headerMeta {
+        flex-wrap: wrap;
+    }
+
+    #ExpBar {
+        width: 300px;
+    }
+    
+    #ExpBar #ExpBarFull {
+        background-size:300px;
+    }
+    
+    #ExpBar .ExpLevelText {
+        font-size: 24px;
+    }
+    
 }
