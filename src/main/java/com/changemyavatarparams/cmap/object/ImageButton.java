@@ -9,17 +9,16 @@ public class ImageButton extends ParamButton {
     private String baseUrl = "images/buttons/";
 
     public ImageButton(AvatarParameter avatarParameter) {
-        super(avatarParameter);
-        this.init();
+        this(avatarParameter, null);
     }
 
     public ImageButton(AvatarParameter avatarParameter, String text) {
         super(avatarParameter, text);
-        this.init();
+        addClassName("imageButton");
+        this.setBackground();
     }
 
-    private void init(){
-        addClassName("imageButton");
+    protected void setBackground(){
         getStyle().set("background-image", "url(\"" + baseUrl + this.getAvatarParameter().getParam() + this.getAvatarParameter().getValue() + ".png\")," +
                 "linear-gradient(#8cb1db, #5a7faa)");
     }

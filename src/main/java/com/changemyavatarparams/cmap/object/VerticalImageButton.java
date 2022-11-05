@@ -6,4 +6,9 @@ public class VerticalImageButton extends ImageButton {
         super(avatarParameter);
         addClassName("VerticalImageButton");
     }
+
+    public VerticalImageButton(AvatarParameter avatarParameter, String text) {
+        super(avatarParameter, text);
+        addClassName("VerticalImageButton");
+    }
 }

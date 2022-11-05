@@ -1,6 +1,5 @@
 package com.changemyavatarparams.cmap;
 
-import com.changemyavatarparams.cmap.controller.DbController;
 import com.changemyavatarparams.cmap.controller.OscController;
 import com.changemyavatarparams.cmap.object.AvatarParameter;
 import com.changemyavatarparams.cmap.view.ChangeMyAvatarParams;
@@ -35,8 +34,7 @@ public class CmapApplication extends SpringBootServletInitializer implements App
 				} finally {
 					AvatarParameter pulseParam = new AvatarParameter("VRMode", 10);
 					if(OscController.avatarMeta.getExp() < 20) {
-						pulseParam.setParam("Exp");
-						pulseParam.setValue(20);
+						pulseParam = new AvatarParameter("exp", 20);
 					}
 					try {
 						OscController.messageSend(pulseParam, false);

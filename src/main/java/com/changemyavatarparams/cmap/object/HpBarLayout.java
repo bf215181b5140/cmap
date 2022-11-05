@@ -10,12 +10,12 @@ public class HpBarLayout extends HorizontalLayout {
     public HpBarLayout(){
         setId("HpBar");
         hpBarFull.setId("HpBarFull");
-        hpBarFull.setWidth("100%");
+        hpBarFull.setWidth("0%");
         add(hpBarFull);
         setAlignItems(Alignment.CENTER);
     }
 
     public void setHpBarFull(int hp) {
-        this.hpBarFull.setWidth((int)((hp * 10) * 0.5) + "%");
+        this.hpBarFull.setWidth(hp + "%");
     }
 }

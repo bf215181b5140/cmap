@@ -24,13 +24,6 @@ public class ParamButton extends Button {
         this.avatarParameter = avatarParameter;
     }
 
-    private void expCostLabel(){
-        int buttonExpCost = this.avatarParameter.getExpCost().apply(0);
-        if(buttonExpCost < 0){
-            getElement().appendChild(new Element("Div"));
-        }
-    }
-
     @Override
     public Registration addClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         return super.addClickListener(y -> OscController.messageSend(this.getAvatarParameter(), true));

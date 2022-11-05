@@ -68,7 +68,7 @@ public class OscController {
 
     public static void messageSend(AvatarParameter avatarParameter, Boolean writeToDb) {
         int newExp = avatarParameter.getExpCost().apply(avatarMeta.getExp());
-        if (newExp < 1) {
+        if (newExp < 0) {
             return;
         }
 
