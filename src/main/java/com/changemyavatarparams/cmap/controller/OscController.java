@@ -93,36 +93,10 @@ public class OscController {
         try {
             oscPortIn = new OSCPortIn(inPort);
 
-            MessageSelector paramSelector = new OSCPatternAddressMessageSelector("/avatar/params/*");
-            MessageSelector metaSelector = new OSCPatternAddressMessageSelector("/avatar/meta/*");
+            MessageSelector paramSelector = new OSCPatternAddressMessageSelector("/avatar/parameters/*");
             MessageSelector avatarSelector = new OSCPatternAddressMessageSelector("/avatar/change");
 
-//            MessageSelector testSelector = new OSCPatternAddressMessageSelector("/*/*/*");
-//            OSCMessageListener testListener = event -> {
-//                System.out.println(event.getMessage());
-//                System.out.println(event.getMessage().getAddress());
-//                System.out.println(event.getMessage().getArguments().get(0));
-//            };
-
             OSCMessageListener paramListener = event -> {
-                String parameter = StringUtils.substringAfterLast(event.getMessage().getAddress(), "/");
-                Object value = event.getMessage().getArguments().get(0);
-                avatarMeta.setLastPulse(java.time.LocalDateTime.now());
-                boolean paramExists = false;
-                for(AvatarParameter param : avatarMeta.getAvatarParameters()){
-                    if(parameter.equals(param.getParam())){
-                        param.setValue(value);
-                        paramExists = true;
-                    }
-                }
-                if(!paramExists){
-                    avatarMeta.getAvatarParameters().add(new AvatarParameter(StringUtils.substringAfterLast(event.getMessage().getAddress(), "/"), (event.getMessage().getArguments().get(0))));
-                }
-                onlineCheck();
-                sendParams();
-            };
-
-            OSCMessageListener metaListener = event -> {
                 String parameter = StringUtils.substringAfterLast(event.getMessage().getAddress(), "/");
                 Object value = event.getMessage().getArguments().get(0);
                 avatarMeta.setLastPulse(java.time.LocalDateTime.now());
@@ -137,6 +111,16 @@ public class OscController {
                         avatarMeta.setVrMode((int) value == 1);
                         break;
                     default:
+                        boolean paramExists = false;
+                        for(AvatarParameter param : avatarMeta.getAvatarParameters()){
+                            if(parameter.equals(param.getParam())){
+                                param.setValue(value);
+                                paramExists = true;
+                            }
+                        }
+                        if(!paramExists){
+                            avatarMeta.getAvatarParameters().add(new AvatarParameter(StringUtils.substringAfterLast(event.getMessage().getAddress(), "/"), (event.getMessage().getArguments().get(0))));
+                        }
                         break;
                 }
                 onlineCheck();
@@ -152,9 +136,7 @@ public class OscController {
             };
 
             oscPortIn.getDispatcher().addListener(paramSelector, paramListener);
-            oscPortIn.getDispatcher().addListener(metaSelector, metaListener);
             oscPortIn.getDispatcher().addListener(avatarSelector, avatarListener);
-//            oscPortIn.getDispatcher().addListener(testSelector, testListener);
             oscPortIn.getDispatcher().setAlwaysDispatchingImmediately(true);
             oscPortIn.startListening();
         } catch (Exception e){

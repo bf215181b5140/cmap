@@ -41,10 +41,10 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     public ChangeMyAvatarParams() {
 
         // Skin
-        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 0, 2)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 2, 2)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 4, 2)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 3, 2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 0)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 4)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 3)));
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 5, 2)));
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 10, 2)));
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 6, 2), "Zombie"));
@@ -229,8 +229,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                 threeColumnLayout,
                 new H4("Fun"),
                 memeLayout
-//            new H4("Other"),
-//            otherLayout
         );
         contentLayout.setId("contentLayout");
         add(contentLayout);
