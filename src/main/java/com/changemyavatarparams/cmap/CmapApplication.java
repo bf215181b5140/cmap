@@ -33,9 +33,6 @@ public class CmapApplication extends SpringBootServletInitializer implements App
 					System.out.println(java.time.LocalDateTime.now() + " Failed to sleep. Exception: " + e.getMessage());
 				} finally {
 					AvatarParameter pulseParam = new AvatarParameter("VRMode", 10);
-					if(OscController.avatarMeta.getExp() < 20) {
-						pulseParam = new AvatarParameter("exp", 20);
-					}
 					try {
 						OscController.messageSend(pulseParam, false);
 					} catch (Exception e) {

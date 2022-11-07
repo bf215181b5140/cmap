@@ -3,7 +3,9 @@ package com.changemyavatarparams.cmap.controller;
 import com.changemyavatarparams.cmap.object.AvatarMeta;
 import com.changemyavatarparams.cmap.object.AvatarParameter;
 import com.changemyavatarparams.cmap.object.Client;
-import com.illposed.osc.*;
+import com.illposed.osc.MessageSelector;
+import com.illposed.osc.OSCMessage;
+import com.illposed.osc.OSCMessageListener;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 import com.illposed.osc.transport.udp.OSCPortIn;
 import com.illposed.osc.transport.udp.OSCPortOut;
@@ -14,12 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class OscController {
 
     // Osc
-    // --legacy-fbt-calibrate --osc=9000:192.168.1.100:9001
+    // --osc=9000:192.168.1.100:9001
     private static final String oscIP = "192.168.1.50";
     private static final int inPort = 9006;
     private static final int outPort = 9005;
@@ -67,11 +68,6 @@ public class OscController {
     }
 
     public static void messageSend(AvatarParameter avatarParameter, Boolean writeToDb) {
-        int newExp = avatarParameter.getExpCost().apply(avatarMeta.getExp());
-        if (newExp < 0) {
-            return;
-        }
-
         try {
             oscPortOut = new OSCPortOut(InetAddress.getByName(oscIP), outPort);
         } catch(Exception e) {
@@ -79,24 +75,15 @@ public class OscController {
         }
 
         OSCMessage message = new OSCMessage("/avatar/parameters/" + avatarParameter.getParam(), List.of(avatarParameter.getValue()));
-        OSCMessage messageExp = new OSCMessage("/avatar/parameters/exp", List.of(newExp));
 
         try {
 
             oscPortOut.send(message);
-            oscPortOut.send(messageExp);
 
             if (writeToDb) {
                 dbConnection.addParameter(avatarParameter.getParam(), avatarParameter.getValue());
             }
 
-            if (avatarParameter.getParam().equals("MemeToggles")) {
-                try {
-                    TimeUnit.SECONDS.sleep(4);
-                } finally {
-                    oscPortOut.send(new OSCMessage("/avatar/parameters/" + avatarParameter.getParam(), List.of(0)));
-                }
-            }
         } catch (Exception e) {
             System.out.println(java.time.LocalDateTime.now() + " Failed sending a manual OSC message: " + message.toString() + ". Exception: " + e.getMessage());
         }
@@ -148,12 +135,6 @@ public class OscController {
                         break;
                     case "VRMode":
                         avatarMeta.setVrMode((int) value == 1);
-                        break;
-                    case "exp":
-                        avatarMeta.setExp((int) value);
-                        break;
-                    case "hp":
-                        avatarMeta.setHp((int) value);
                         break;
                     default:
                         break;

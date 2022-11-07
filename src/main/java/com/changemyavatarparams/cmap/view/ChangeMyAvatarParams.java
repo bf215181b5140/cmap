@@ -5,7 +5,6 @@ import com.changemyavatarparams.cmap.object.*;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.avatar.Avatar;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -35,14 +34,9 @@ public class ChangeMyAvatarParams extends VerticalLayout {
     Span vrModeBadge = new Span(new Span("in VR"));
     Span desktopModeBadge = new Span(new Span("on desktop"));
     Span supportedAvatarBadge = new Span(new Span("Possibly using avatar that isn't supported!"), createIcon(VaadinIcon.WARNING));
-    Span expInfo = new Span("Most toggles have exp cost. If there isn't enough exp they will be grayed out. Touching certain parts of my avatar in VRChat increases exp. Dying animation toggles consume most of the exp points.");
-
-    ExpBarLayout expBar = new ExpBarLayout();
-    HpBarLayout hpBar = new HpBarLayout();
 
     VerticalLayout contentLayout = new VerticalLayout();
     Avatar avatar = new Avatar("Me");
-    Div socksLayout = new Div();
 
     public ChangeMyAvatarParams() {
 
@@ -64,6 +58,8 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 10, 1)));
         paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 11, 1)));
         paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 12, 1)));
+
+
         ParamButton styleOutfitTrue = new ImageButton(new AvatarParameter("StyleOutfit", true, 2));
         styleOutfitTrue.getStyle().set("background-position", "center center");
         ParamButton styleOutfitFalse = new ImageButton(new AvatarParameter("StyleOutfit", false, 2));
@@ -72,42 +68,31 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(styleOutfitTrue);
         paramButtons.add(styleOutfitFalse);
 
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.2, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.4, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.6, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.8, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 1, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.2)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.4)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.6)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.8)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 1)));
 
         // Hair
-        paramButtons.add(new ParamButton(new AvatarParameter("Hair", false, 1), "Blowout"));
-        paramButtons.add(new ParamButton(new AvatarParameter("Hair", true, 1), "Ponytail"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Hair", false), "Blowout"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Hair", true), "Ponytail"));
 
         // Piercings
-        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", false, 1), "Yes"));
-        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", true, 1), "No"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", false), "Yes"));
+        paramButtons.add(new ParamButton(new AvatarParameter("Piercings", true), "No"));
 
         // Horns and tail
-        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", true, 1), "Yes"));
-        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", false, 1), "No"));
+        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", true), "Yes"));
+        paramButtons.add(new ParamButton(new AvatarParameter("HornsTail", false), "No"));
 
-        //Memes
-        paramButtons.add(new ParamButton(new AvatarParameter("MemeToggles", 11, integer -> Math.max(1, (int) (integer * 0.3))), "Die in Minecraft"));
-        paramButtons.add(new ParamButton(new AvatarParameter("MemeToggles", 12, integer -> Math.max(1, (int) (integer * 0.3))), "Die in Apex"));
-//        paramButtons.add(new ParamButton(new AvatarParameter("takeDamage", true, 0), "A little slap"));
-
-        //Test button
-//        paramButtons.add(new ParamsButton("MuteSelf", false, "testing button"));
-//        paramButtons.add(new ParamsButton("MuteSelf", true, "testing button 2"));
-//        paramButtons.add(new ParamsButton("TrackingType", 3, "testing button 2"));
 
         setId("pageLayout");
         buildHeader();
         buildContent();
-//        setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 
-//        paramButtons.forEach(x -> x.addClickListener(y -> OscController.messageSend(x.getParam(), x.getValue(), true)));
     }
 
     private void buildHeader() {
@@ -154,20 +139,12 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         supportedAvatarBadge.addClassName("warning");
         supportedAvatarBadge.setVisible(false);
 
-        expInfo.getElement().getThemeList().add("badge");
-        expInfo.addClassName("badge");
-        expInfo.setMaxWidth("500px");
-
-//        headerAvatar.add(, onlineBadge, offlineBadge);
-//        headerAvatar.setId("headerAvatar");
-//        headerAvatar.setAlignItems(Alignment.END);
 
         meta.add(new HorizontalLayout(onlineBadge, offlineBadge), new HorizontalLayout(afkBadge, sleepingBadge, muteSelfBadge, vrModeBadge, desktopModeBadge));
         meta.setJustifyContentMode(JustifyContentMode.BETWEEN);
         meta.setId("meta");
-//        meta.setAlignItems(Alignment.END);
 
-        headerMeta.add(meta, hpBar, expBar);
+        headerMeta.add(meta);
         headerMeta.setJustifyContentMode(JustifyContentMode.CENTER);
         headerMeta.setAlignItems(Alignment.END);
         headerMeta.setId("headerMeta");
@@ -177,7 +154,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         headerLayout.setAlignItems(Alignment.CENTER);
         headerLayout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         add(headerLayout);
-        add(supportedAvatarBadge, expInfo);
+        add(supportedAvatarBadge);
     }
 
     private void buildContent() {
@@ -190,7 +167,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
 
         HorizontalLayout socksStyleLayout = new HorizontalLayout();
         socksStyleLayout.setJustifyContentMode(JustifyContentMode.EVENLY);
-        socksLayout.add(new H4("Socks style"), socksStyleLayout);
 
         HorizontalLayout threeColumnLayout = new HorizontalLayout();
         GroupButtonLayout hairLayout = new GroupButtonLayout();
@@ -211,12 +187,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                     break;
                 case "StyleSocks":
                     socksStyleLayout.add(btn);
-                    break;
-                case "MemeToggles":
-                    memeLayout.add(btn);
-                    break;
-                case "takeDamage":
-                    memeLayout.add(btn);
                     break;
                 case "Hair":
                     hairLayout.add(btn);
@@ -255,7 +225,7 @@ public class ChangeMyAvatarParams extends VerticalLayout {
                 skinlayout,
                 new H4("Outfits"),
                 outfitLayout,
-                socksLayout,
+                new HorizontalLayout(new H4("Socks style"), socksStyleLayout),
                 threeColumnLayout,
                 new H4("Fun"),
                 memeLayout
@@ -284,7 +254,6 @@ public class ChangeMyAvatarParams extends VerticalLayout {
             avatar.removeClassName("offlineBoxShadow");
             avatar.setClassName("onlineBoxShadow");
             contentLayout.removeClassName("offlineBoxShadow");
-            socksLayout.setVisible(false);
 
             afkBadge.setVisible(avatarMeta.isAfk());
             muteSelfBadge.setVisible(avatarMeta.isMuteSelf());
@@ -292,38 +261,13 @@ public class ChangeMyAvatarParams extends VerticalLayout {
             desktopModeBadge.setVisible(!avatarMeta.isInVrMode());
             supportedAvatarBadge.setVisible(!avatarMeta.isSupportedAvatar());
 
-            expBar.setExpLevel((int) (avatarMeta.getExp() * 0.05));
-            expBar.setExpPoints(avatarMeta.getExp() % 20);
-
-            hpBar.setHpBarFull((int) ((avatarMeta.getHp() * 0.05) * 100));
-
-//            AtomicInteger sleepingThreshold = new AtomicInteger(0);
             paramButtons.forEach(btn -> {
-                btn.setEnabled(btn.getAvatarParameter().getExpCost().apply(avatarMeta.getExp()) >= 0);
-                if (btn.getAvatarParameter().getParam().equals("StyleOutfit")) {
-                    btn.setVisible(false);
-                }
                 avatarMeta.getAvatarParameters().forEach(newParam -> {
                     if (btn.getAvatarParameter().getParam().equals(newParam.getParam()) && btn.getAvatarParameter().getValue().equals(newParam.getValue())) {
                         btn.setEnabled(false);
-                        if (btn.getAvatarParameter().getParam().equals("Outfit") &&
-                                (btn.getAvatarParameter().getValue().equals(1) ||
-                                 btn.getAvatarParameter().getValue().equals(0) ||
-                                 btn.getAvatarParameter().getValue().equals(5) ||
-                                 btn.getAvatarParameter().getValue().equals(6))) {
-                            socksLayout.setVisible(true);
-                        }
                     }
-                    if (newParam.getParam().equals("StyleOutfit") && btn.getAvatarParameter().getParam().equals(newParam.getParam()) && !btn.getAvatarParameter().getValue().equals(newParam.getValue())) {
-                        btn.setVisible(true);
-                    }
-//                    if (newParam.getParam().equals("GestureRight") && newParam.getValue().equals(7) ||
-//                            newParam.getParam().equals("GestureLeft") && newParam.getValue().equals(0)) {
-//                        sleepingThreshold.getAndIncrement();
-//                    }
                 });
             });
-//            sleepingBadge.setVisible(avatarMeta.isInVrMode() && !avatarMeta.isAfk() && sleepingThreshold.get() >= (paramButtons.size() * 2));
         } else {
             avatar.removeClassName("onlineBoxShadow");
             avatar.setClassName("offlineBoxShadow");
