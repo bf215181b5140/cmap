@@ -3,7 +3,9 @@ package com.changemyavatarparams.cmap.controller;
 import com.changemyavatarparams.cmap.object.AvatarMeta;
 import com.changemyavatarparams.cmap.object.AvatarParameter;
 import com.changemyavatarparams.cmap.object.Client;
-import com.illposed.osc.*;
+import com.illposed.osc.MessageSelector;
+import com.illposed.osc.OSCMessage;
+import com.illposed.osc.OSCMessageListener;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 import com.illposed.osc.transport.udp.OSCPortIn;
 import com.illposed.osc.transport.udp.OSCPortOut;
@@ -19,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class OscController {
 
     // Osc
-    // --legacy-fbt-calibrate --osc=9000:192.168.1.100:9001
+    // --osc=9005:192.168.1.100:9006
     private static final String oscIP = "192.168.1.50";
     private static final int inPort = 9006;
     private static final int outPort = 9005;
@@ -29,7 +31,7 @@ public class OscController {
 
     // Avatar meta and parameters
     public static AvatarMeta avatarMeta = new AvatarMeta();
-    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_c4368f6c-cf31-4763-90ab-e6e56ee7f009");
+    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_2f278bcb-1cb6-4fa2-8323-28581daad4ec");
 
     // UI Clients
     public static List<Client> clients = new ArrayList<>();

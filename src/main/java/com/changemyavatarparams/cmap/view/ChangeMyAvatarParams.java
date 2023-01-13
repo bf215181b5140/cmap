@@ -53,17 +53,20 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 3, 2)));
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 5, 2)));
         paramButtons.add(new ImageButton(new AvatarParameter("Skin", 10, 2)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 6, 2), "Zombie"));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 6, 2)));
+        paramButtons.add(new ImageButton(new AvatarParameter("Skin", 7, 2)));
 
         // Outfits
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 1, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 0, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 5, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 6, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 9, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 10, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 11, 1)));
-        paramButtons.add(new ImageButton(new AvatarParameter("Outfit", 12, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 1, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 0, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 5, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 6, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 9, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 10, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 11, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 12, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 13, 1)));
+
         ParamButton styleOutfitTrue = new ImageButton(new AvatarParameter("StyleOutfit", true, 2));
         styleOutfitTrue.getStyle().set("background-position", "center center");
         ParamButton styleOutfitFalse = new ImageButton(new AvatarParameter("StyleOutfit", false, 2));
