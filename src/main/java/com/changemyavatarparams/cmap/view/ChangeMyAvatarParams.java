@@ -67,20 +67,20 @@ public class ChangeMyAvatarParams extends VerticalLayout {
         paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 12, 1)));
         paramButtons.add(new VerticalImageButton(new AvatarParameter("Outfit", 13, 1)));
 
-        ParamButton styleOutfitTrue = new ImageButton(new AvatarParameter("StyleOutfit", true, 2));
-        styleOutfitTrue.getStyle().set("background-position", "center center");
-        ParamButton styleOutfitFalse = new ImageButton(new AvatarParameter("StyleOutfit", false, 2));
-        styleOutfitFalse.getStyle().set("background-position", "center center");
-        styleOutfitFalse.setVisible(false);
-        paramButtons.add(styleOutfitTrue);
-        paramButtons.add(styleOutfitFalse);
+//        ParamButton styleOutfitTrue = new VerticalImageButton(new AvatarParameter("StyleOutfit", true, 2));
+//        styleOutfitTrue.getStyle().set("background-position", "center center");
+//        ParamButton styleOutfitFalse = new VerticalImageButton(new AvatarParameter("StyleOutfit", false, 2));
+//        styleOutfitFalse.getStyle().set("background-position", "center center");
+//        styleOutfitFalse.setVisible(false);
+//        paramButtons.add(styleOutfitTrue);
+//        paramButtons.add(styleOutfitFalse);
 
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.2, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.4, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.6, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 0.8, 1)));
-        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", (float) 1, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 0, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 1, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 2, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 3, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 4, 1)));
+        paramButtons.add(new VerticalImageButton(new AvatarParameter("StyleSocks", 5, 1)));
 
         // Hair
         paramButtons.add(new ParamButton(new AvatarParameter("Hair", false, 1), "Blowout"));

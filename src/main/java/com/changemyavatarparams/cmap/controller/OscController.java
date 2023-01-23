@@ -31,7 +31,7 @@ public class OscController {
 
     // Avatar meta and parameters
     public static AvatarMeta avatarMeta = new AvatarMeta();
-    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_2f278bcb-1cb6-4fa2-8323-28581daad4ec");
+    public static List<String> supportedAvatarIDs = Arrays.asList("avtr_2f278bcb-1cb6-4fa2-8323-28581daad4ec", "avtr_15caeae9-ff66-4856-a0b3-9424d97f7ab2");
 
     // UI Clients
     public static List<Client> clients = new ArrayList<>();
